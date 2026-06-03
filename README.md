@@ -1,6 +1,6 @@
 # SIMBOTs Core Ontology and Reference Library
 
-This repository contains the semantic models, data shapes, and documentation for **SIMBOTs** (Mathematical Simulation models for real time). The ontology is built on top of the **CEN EN 17632-1:2022 (Semantic Modelling and Linking — SML)** framework to enable clear, vendor-neutral engineering data reuse and validation across simulation platforms.
+This repository contains the O4BSIM ontology and Reference library for **SIMBOTs** (Mathematical Simulation models for real-time). The ontology is built on top of the **CEN EN 17632-1:2022 (Semantic Modelling and Linking — SML)** framework to enable clear communication and   data reuse about mathematical simulations.
 
 ## Overview
 
