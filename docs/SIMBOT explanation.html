@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mathematical simulation models for real time, SIMBOTs</title>
+  
+  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" async></script>
+  
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "draft-finding", 
+      shortName: "simbots-simulation-models",
+      publishDate: "2026-05-25", 
+      
+      authors: [{ 
+          name: "Pablo Vicente Legazpi", 
+          company: "Building Digital Twin Association (BDTA)",
+          companyURL: "https://buildingdigitaltwin.org/",
+      }],
+      editors: [{
+          name: "Apostolis Barekas", 
+          company: "Semmtech",
+          companyURL: "https://semmtech.com/"
+      }],
+      
+      github: "https://github.com/PabloVicenteLegazpi/O4BSIM",
+
+      logos: [{
+        src: "https://i0.wp.com/eu4dbp.net/wp-content/uploads/2023/03/BDTA.png?fit=634%2C234&ssl=1",
+        alt: "Building Digital Twin Association",
+        height: 50,
+        url: "https://buildingdigitaltwin.org/"
+      }],
+      
+      additionalCopyrightHolders: '<a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and',
+      license: "cc-by"
+    };
+  </script>
+
+  <style>
+    /* --- THEMATIC COPYRIGHT BOX STYLING --- */
+    p.copyright {
+      /*background-color: #f0fdfa !important; */
+      /*border-left: 4px solid #0d2c54 !important;*/
+      padding: 12px 15px !important;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-top: 15px !important;
+      margin-bottom: 15px !important;
+    }
+    p.copyright a {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    /* --- BULLETPROOF RE-SPEC TABLE OVERRIDES --- */
+    html body table.simple {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      margin: 30px 0 !important;
+    }
+    
+    /* Forces corporate dark navy headers */
+    html body table.simple th {
+      background-color: #0d2c54 !important;
+      color: white !important;
+      padding: 12px !important;
+      text-align: left !important;
+      border: 1px solid #0d2c54 !important;
+    }
+    
+    /* Forces baseline white table cells with clean padding */
+    html body table.simple td {
+      padding: 12px !important;
+      border: 1px solid #e2e8f0 !important;
+      background-color: #ffffff !important; 
+    }
+    
+    /* Forces the row hover lighting effect directly onto the cells */
+    html body table.simple tbody tr:hover td {
+      background-color: #f0fdfa !important; 
+      cursor: default;
+    }
+    
+    /* Forces the custom line-highlight layout rule */
+    html body table.simple tbody tr.highlight td {
+      background-color: #e0f2fe !important; 
+    }
+    
+    /* Adds the solid blue accent edge line to highlighted table entries */
+    html body table.simple tbody tr.highlight td:first-child {
+      border-left: 4px solid #0284c7 !important;
+    }
+  </style>
+
+  <script>
+    (function() {
+      var bdtaCopyright = 'Copyright © 2026 <a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and text is distributed under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0 License</a>.';
+      
+      function enforceCopyright() {
+        var el = document.querySelector("p.copyright");
+        if (el && el.innerHTML !== bdtaCopyright) {
+          el.innerHTML = bdtaCopyright;
+        }
+      }
+      // FIXED: Uses safe relative pathing and adds the mandatory 'px' layout unit
+        if (!document.getElementById("left-status-banner")) {
+          var img = document.createElement("img");
+          img.id = "left-status-banner";
+          //img.src = "C:/Users/Apostolis Barekas/Apo - Code/SIMBOT - ReSpec/images/DRAFT.svg"; 
+          img.src = "../images/DRAFT.svg";
+          img.alt = "Status Ribbon";
+          
+          img.style.setProperty("position", "fixed", "important");
+          img.style.setProperty("left", "0px", "important"); 
+          img.style.setProperty("top", "0px", "important");
+          img.style.setProperty("width", "30px", "important");
+          img.style.setProperty("height", "460px", "important");
+          img.style.setProperty("z-index", "999999", "important");
+          img.style.setProperty("display", "block", "important");
+          
+          document.documentElement.appendChild(img);
+        }
+
+      var observer = new MutationObserver(enforceCopyright);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+
+      document.addEventListener("respecDone", function() {
+        if (!document.getElementById("left-status-banner")) {
+          var img = document.createElement("img");
+          img.id = "left-status-banner";
+          img.src = "../images/DRAFT.svg"; 
+          img.alt = "Status Ribbon";
+          img.style.cssText = "position: fixed !important; left: 0px !important; top: 0px !important; width: 30px !important; height: 280 !important; z-index: 7999999 !important; display: block !important; margin: 0 !important; padding: 0 !important;";
+          document.documentElement.appendChild(img);
+        }
+        enforceCopyright();
+      });
+    })();
+  </script>
+</head>
+<body>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>
+      This document explains a standardized, vendor-neutral methodology for creating 
+      SIMBOTs which are semantic expressions of mathematical 
+      simulation models. Building on foundations established by the 
+      SPHERE EU project, this document introduces and explains the semantic framework (adhering semantic web standards) 
+      created to structure functional equipment data and multi-dimensional performance curves and standarsise market components in a digital product catalogue . 
+      By bridging the gap between component manufacturers and software developers, this methodology drastically reduces the 
+      time and implementation costs of large-scale 0D-1D mathematical simulations while safeguarding proprietary 
+      manufacturer know-how and industry intellectual property.
+    </p>
+  </section>
+
+  <section id="introduction">
+    <h2>Introduction</h2>
+    <p>
+      SIMBOTs initial concept was a registered achievement of the SPHERE EU project
+      . They were used to represent some pilot simulated
+      components, to represent building and HVAC equipment’s. Models included a
+      detailed description of the ventilation discipline, with human models and
+      complex air fluid mixtures as well. It is explained in a white paper published
+      by SPHERE project <a href="#bib-1">[1]</a> .
+    </p>
+    <p>
+      The final intention of SIMBOTs is to reduce the cost and time implementation of
+      simulation models. It is part of a methodology which tries to adopt
+      applications from aerospace or nuclear into the construction business. This
+      needs a drastic reduction in cost and implementation time. But benefits could
+      be extended since initial design to final exploitation or decommissioning phase.
+    </p>
+    <p>
+      In mathematical simulation practice (also known as 0D-1D simulation), the operator
+      spends a lot of time collecting information and specs of market equipment’s.
+      Many times, the operator has to use parametric models from the vendor
+      libraries, and adapt those parametric simulation components to the specific
+      needs of a model, making some assumptions and admitting compromises. This is
+      justified if the cost and time restrictions are not the main ones. But as soon
+      as they are more and more critical, a model is just not affordable or it is not
+      suitable in the normal design process, even if the simulation is providing
+      valuable information. So, standardized and ready to use components and libraries
+      could be helping to reduce this functional gap, opening a new potential
+      methodology affecting design and all the rest of phases.
+    </p>
+    <p>
+      Orientation to real time is another key. If simulation can be running quicker than the
+      physical asset behaviour, then an additional source of information other then
+      monitoring could be available, providing a way to make monitoring more robust
+      or the implementation of advanced control solutions.
+    </p>
+    <p>
+      The concept of SIMBOTs shall be a market agreement for representing the functional
+      mathematical model of equipment and components. This includes all possible
+      disciplines, like electrical, fluid networks, air ventilation, process
+      equipment’s, spaces, humans, etc. There is no conceptual limitation. And the
+      natural stakeholders, shall be manufacturers of those equipment’s and software
+      developers, implementing libraries to be used in their legacy or open-source
+      software.
+    </p>
+    <p>
+      For one specific type of equipment, the methodology for representing with SIMBOTs the
+      market models could be similar, just changing the performance curves. And this
+      could have some practical implications in the test lab or certification of the
+      model. But this is out of the scope of this CWA.
+    </p>
+  </section>
+
+  <section id="scope">
+    <h2>Scope</h2>
+    <p>This CEN Workshop Agreement (CWA) aims to define a methodology for creating SIMBOTs.</p> 
+    <p>This methodology includes: </p>
+    <ol>
+      <li>SIMBOT conceptualization: input, outputs and parameters for tracking; </li>
+      <li>How to define performance curves based on product information (usually public data sheets); </li>
+      <li>How to generate the semantic information to add in the knowledge Graph of SIMBOTs; </li>
+      <li>How to implement a library component in a legacy simulation software using the semantic information extracted from the knowledge graph; </li>
+      <li>How to use in practice the SIMBOTs for big models; </li>
+      <li>Practical details and use of simulation for real time.</li>
+    </ol>
+    <p> This methodology helps to improve the collaboration between manufacturers and software developers, reducing the time and cost of model implementation. </p>
+  </section>
+
+  <section id="normative-references">
+    <h2>Normative references</h2>
+    <p>There are no normative references in this document.</p>
+  </section>
+
+  <section id="terms-and-definitions">
+    <h2>Terms and definitions</h2>
+    <p>
+      For the purposes of this document, the following terms and definitions apply. 
+      ISO and IEC maintain terminological databases for use in standardization at the following addresses:
+    </p>
+    <ul>
+      <li>ISO Online browsing platform: available at <a href="http://www.iso.org/obp/" target="_blank">http://www.iso.org/obp/</a></li>
+      <li>IEC Electropedia: available at <a href="http://www.electropedia.org/" target="_blank">http://www.electropedia.org/</a></li>
+    </ul>
+
+    <p> <strong>3.1</strong></p>
+    <p> <strong>simulation</strong> </p>
+    <p>Software process which replicates a system functionality in order to predict actual behaviour. </p>
+
+    <p> <strong>3.2</strong></p>
+    <p> <strong>simulation component</strong> </p>
+    <p> Fundamental, modular element of a software simulation system, representing a subsystem or entity with a predefined, generalized, and reduced behaviour that can be reused across different simulation models. </p>
+    
+    <p> <strong>3.3</strong></p>
+    <p><strong>component digital twin</strong></p>
+    <p><strong>CDTw</strong></p>
+    <p>Digital twin of a component</p>
+    <blockquote>SOURCE: EN 18162:2026, 3.4, modified - Note 1 to entry and Example have been removed</blockquote>
+
+    <p><strong>3.4</strong></p>
+    <p><strong>digital twin</strong></p> 
+    <p><strong>DTw</strong></p>
+    <p>Digital representation of a target entity with data connections that enable convergence between the physical and digital states at an appropriate rate of synchronization.</p>
+    <aside class="note" title="Note 1 to entry">
+      Digital twin has some or all of the capabilities of visualization, simulation, surveying, monitoring, forecasting, control, etc.
+    </aside>
+    <blockquote>SOURCE: EN 18162:2026, 3.5</blockquote>
+
+    <p><strong>3.5</strong></p>
+    <p><strong>components library</strong></p>
+    <p>Organized, reusable collection of pre-defined, mathematical, or logical models that represent physical or conceptual entities within a simulation environment.</p>
+
+    <p><strong>3.6</strong></p>
+    <p><strong>abstract component</strong></p>
+    <p>Foundational, reusable model definition within a component library that cannot be directly instantiated (used) in a simulation on its own. Instead, it serves as a base class or template, defining shared ports, parameters, and fundamental equations that are inherited by more specific child components.</p>
+    
+    <p><strong>3.7</strong></p>
+    <p><strong>SIMBOT</strong></p>
+    <p>Open source, semantic expression of the mathematical model of a market equipment describing its functionality. It is oriented to real time execution, and it is in agreement with the manufacturer performance description. This mathematical model should be “parameter free”.</p>
+    <aside class="note" title="Note 1 to entry">A SIMBOT is considered as a vendor-neutral simulation component.</aside>
+    <aside class="note" title="Note 2 to entry">A SIMBOT is considered as a component digital twin (CDTw).</aside>
+
+    <p><strong>3.8</strong></p>
+    <p><strong>simulation DECK</strong></p>
+    <p>Standalone, executable simulation model exported as a "black box" that can be run independently of the main software environment. It encapsulates all compile-time and run-time dependencies, enabling the creator (supplier) to deliver a secure, interactive simulation to a user who does not have simulation software installed.</p>
+
+    <p><strong>3.9</strong></p>
+    <p><strong>OPC Unified Architecture</strong></p>
+    <p>Platform-independent, secure, and open-source communication protocol designed for industrial automation and the Internet of Things (IIoT). Developed by the OPC Foundation, it enables seamless data exchange, interoperability, and modelling from field devices to cloud systems.</p>
+    <aside class="note" title="Note 1 to entry">
+      More information about OPC UA Application can be found in IEC 62541 and the OPC UA website (<a href="https://opcfoundation.org/" target="_blank">https://opcfoundation.org/</a>).
+    </aside>
+
+    <p><strong>3.10</strong></p>
+    <p><strong>simulation model tracking system, SMTS</strong></p>
+    <p> A specialized, real-time, or near-real-time computational framework that runs in parallel with a physical process or system. It combines dynamic simulation models with actual field data to track the current operating state of the system, correct model parameters, and predict future behaviour.</p>
+
+    <p><strong>3.11</strong></p>
+    <p><strong>performance curve</strong></p>
+    <p>Graphical representation illustrating the relationship between a machine's or system's output capabilities and its operational inputs. These curves are used to predict performance under varying conditions, optimize efficiency, and ensure equipment is properly sized for specific applications.</p>
+
+    <p><strong>3.12</strong></p>
+    <p><strong>Digital Product Passport, DPP</strong></p>
+    <p> EU-mandated digital record containing comprehensive data on a product's origin, materials, sustainability, and repairability.</p>
+
+    <p><strong>3.13</strong></p>
+    <p><strong>phasorial representation, DQ</strong></p>
+    <p> Mathematical method in electrical engineering that converts time-varying sinusoidal waveforms (AC signals) into stationary complex numbers or vectors, known as phasors (D real part, Q imaginary part). A phasor represents the magnitude (amplitude) and phase angle of a signal, simplifying AC circuit analysis from differential equations into algebraic operations.</p>
+
+    <p><strong>3.14</strong></p>
+    <p><strong>residuals</strong></p>
+    <p>Comparison between simulation generated values and monitoring of the same magnitude. It is made by simple difference (subtraction).</p>
+
+    <p><strong>3.15</strong></p>
+    <p><strong>Supervisory Control and Data Acquisition, SCADA</strong></p>
+    <p>In control engineering, a computer-based system combining hardware and software to monitor, control, and analyse process systems in real-time. It enables remote operation of devices, optimizing efficiency and safety.</p>
+  </section>
+
+  <section id="simbot-information">
+    <h2>SIMBOT information</h2>
+    <p>
+      The information relating to a SIMBOT is divided in: 
+    </p>
+    <ul>
+      <li>general (non-functional) information</li>
+      <li>functional information and</li>
+      <li>ancillary information.</li>
+    </ul>
+    
+    <section id="server-simbot-general-information">
+        <h3>Server SIMBOT information: general information</h3>
+        <p>General information is any information that refers to the SIMBOT as an entity, adding the necessary context to identify a SIMBOT in a unique and precise, unambiguous way. This general information includes the entities contained in the following table.</p>
+        <table class="simple">
+            <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Manufacturer</strong></td>
+                    <td>Original manufacturer (not reseller). Owner intellectual property, specifications and controlling the update, downgrade or recycling.</td>
+                </tr>
+                <tr>
+                    <td><strong>Model</strong></td>
+                    <td>Specific model of the equipment. This shall not be a generic description or a series of models, but a precise market model.</td>
+                </tr>
+                <tr>
+                    <td><strong>Discipline</strong></td>
+                    <td>This value shall be one of the disciplines classifications <sup>1</sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Abstract component</strong></td>
+                    <td>This is just a name supporting the mapping with the vendors abstract components mapping. Vendor may have or not the same abstract component name.</td>
+                </tr>
+                <tr>
+                    <td><strong>Version</strong></td>
+                    <td>SIMBOT version. In Annotations, history of versions shall be described.</td>
+                </tr>
+                <tr>
+                    <td><strong>Date</strong></td>
+                    <td>Date of publication in the knowledge graph. History of publications shall be detailed in Annotations.</td>
+                </tr>
+                <tr>
+                    <td><strong>Power</strong></td>
+                    <td>This value in W shall describe the nominal power of the equipment.</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>This value shall be one of the status classifications <sup>2</sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Annotations</strong></td>
+                    <td>MODEL history. Data sheet reference. SIMBOT Version history. SIMBOT Date of publication history. Reference to Digital Product Passport information. </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 0.9em; color: #666; background-color: #f8fafc !important;">
+                    <sup>1</sup> Disciplines classification values can be for example: Building, HVAC, Data Center.
+                    <p><sup>2</sup> Status classification values can be for example: Demo, Estimated, Validated.</p>
+                </tr>
+            </tbody>
+        </table>
+        <p> General information shall not replicate information which is already present in digital product passport knowledge graphs. Functional information of SIMBOTs must be aligned with catalogues or DPP information, but not replicating information which is already there. Instead, SIMBOT must be focussed on functional description, rather than geometrical, potential use, market utilities or maintenance instructions. That non-functional structured information shall be accessible thanks to general information of the SIMBOT </p>
+    </section>
+    <section id="functional information">
+        <h4>Functional information</h4>
+        <p> The performance information shall contain the name of the concept, the input(s), the outputs, performance curves linking the input(s) and outputs, and outputs used for SMTS. Input(s) and outputs shall be defined with initial values, format and units. Performance curves shall be defined as curve by points, and they may have several dimensions. SMTS shall be several outputs to get redundancy with monitoring values.</p>
+    </section>
+    <section id="ancillary information">
+        <h5>Ancillary information, testing and certification for SIMBOT implementation</h5>
+        <p> Ancillary information shall be included references of the basement information to define the SIMBOT. This may be references to specs or datasheets, certified lab tests or any other methodology. </p>
+    </section>
+  </section>
+
+  <section id="ontology">
+    <h2>Ontology definition</h2>
+    <p>For the representation of the SIMBOT a semantic expression shall be adopted. It is neutral and can have all the mathematical content needed. Information about general data of the market model shall be avoided, and the ontology and knowledge Graph shall be aligned with digital product password applications but not including information which may be present in those resources. An example is provided in annex A.The SIMBOT information shall be semantically structured following a public ontology. 
+    </p>
+  </section>
+
+  <section id="disciplines and abstract components">
+    <h2>Disciplines and abstract components: mapping with software vendor applications</h2>
+    <p>The organization by disciplines and the existence of abstract components implies the preparation by the software developer of these abstract components and functional 
+        libraries on their own software platform. The abstract component name included in the SIMBOT information has no content.
+         However, there must be an equivalent component on the part of the software developer.
+        The final organization of the component libraries by the developer shall be the sole responsibility of the developer 
+        and shall include component validation models.
+        Both the organization by disciplines and the relationship of abstract components require continuous maintenance and
+        publication, and the knowledge base of the O4BSIM ontology is used for this purpose.
+    </p>
+    <section id="Electro interaction">
+        <h3>Electro interaction</h3>
+        <p>In general, almost all equipment requires electrical power to work. The introduction of the electrical discipline with 
+            sampling frequencies on the order of minutes makes it necessary to use a phasorial representation. 
+            The components of this discipline, therefore, shall not include electrical components for the time domain, 
+            but DQ components with phasorial representation.
+        </p>
+    </section>
+    <section id="Controls and SIMBOTs">
+        <h4>Controls and SIMBOTs</h4>
+        <p>In general, SIMBOTs interact with internal and external control loops. In the case of an internal regulation of the SIMBOT,
+            all those adjustments that have a temporary response below the minute shall be avoided, 
+            simplifying the behaviour of the equipment only with a performance curve
+        </p>
+    </section>
+  </section>
+
+  <section id="real-time-simulation">
+    <h2>Real-time simulation</h2>
+    <p> Real-time simulation means that the integration of the system is solved during the physical execution. This requires a very careful and efficient representation of the components, so that integration times do not exceed the pace of execution in large models. We can consider the simulation to be executed satisfactorily if the integration times are approximately one order of magnitude below the physical execution. For example, physical sampling every 5 min (300 s) would require integration times of approximately 30 s. </p>
+    <p> In real time, the simulation model (which can be an executable or what we call DECK) would receive information from adjustments or field signals. The DECK returns values integrated in that range. And finally, these values can be compared with monitored values, monitoring the operation of the equipment in real time. </p>
+
+    <section id="limitations">
+      <h3>Limitations</h3>
+      
+      <section id="one-step-delay">
+        <h4>One-step delay</h4>
+        <p> Because the simulation is run with field inputs, there is an intrinsic one-step delay in the simulation output versus monitoring. This should be taken into account in the SMTS. </p>
+      </section>
+
+      <section id="co-simulation">
+        <h4>Co-simulation</h4>
+        <p> It would be possible to integrate multiple DECKS using inputs and outputs from both. However, the practical co-simulation that would be achieved in this way can falsify the real behaviour of the system. If this is the case, thinking about large models, it is important to avoid the mutual influence that may exist between sections of the installation. </p>
+      </section>
+
+      <section id="level-of-detail-and-methodology">
+        <h4>Level of detail and methodology</h4>
+        <p> For the development of models, a common representation methodology is necessary, in addition to having component SIMBOTs. This would affect, on the one hand, the most basic processes that are simulated and, on the other hand, the way in which systems are implemented that are faster in their response than sampling times. Engineering practice and new standards help solve that problem. </p>
+      </section>
+    </section>
+
+    <section id="observation-window">
+      <h3>Observation window</h3>
+      <p> An observation window in a simulation model tracking system is the specific time interval or spatial range during which a sensor, model, or entity actively records data and monitors the system's state. It defines the boundaries for data collection, filtering, and analysis, separating relevant events from noise or data outside the area of interest. </p>
+      <p> For the implementation of SMTS it is not essential to have historical data, so only a portion of the data over time would be enough for the execution of the comparison algorithms. Therefore, we can speak of a observation window in time for SMTS processes, which depends on the dynamics of the processes of the system. </p>
+    </section>
+
+    <section id="smts-algorithms-residuals">
+      <h3>SMTS algorithms, residual and other resources</h3>
+      <p> Algorithms for comparing simulation and monitoring results can be of many types. Not to be forgotten is the <a href="#one-step-delay">one-step delay limitation</a>. </p>
+      <p> A first comparison can simply be made by differentiating values between simulation and monitoring. These values are named as residuals. </p>
+      <p> More advanced algorithms could compensate for one-step delay, take into account additions or other operations between variables, or consider not only current values but also derivatives or integrals. In some cases, these operations can already be performed in the simulation DECK, but in others they can be carried out in the simulation and monitoring integration platform (which could be a SCADA system or a similar software resource in real time). </p>
+    </section>
+
+    <section id="scada-systems-and-decks">
+      <h3>SCADA systems and DECKs</h3>
+      <p> The simulation DECK needs control commands (RUN, RESET, integrate a single step, simulation time, etc.) as well as variables, INPUTs/OUTPUTs. To exchange information with the DECK, several communication protocols are possible. Among them, the OPC UA protocol would allow us to exchange control commands and variables. The communication protocol must be used by both the simulation DECK and the SCADA or real-time system being used (it could also be a real-time database). </p>
+    </section>
+  </section>
+
+  <section id="manufacturer-know-how">
+    <h2>Respect for the manufacturer's know-how</h2>
+    <p> Since the SIMBOT functionally describes the behaviour of a computer, there could be the potential danger of making public knowledge and proprietary information of the manufacturer. By expressing the SIMBOT with performance curves, the aim is to avoid any detail that could compromise the manufacturer's ownership. This marks a limit in terms of the developments of the SIMBOTs, which shall not incorporate the internal programming of the equipment or details of internal materials or systems. In this way, the manufacturer's know-how is protected. </p>
+  </section>
+
+  <section id="intellectual-property-protection">
+    <h2>Software developers and protection of intellectual property</h2>
+    <p> Based on the open and semantic definition of the SIMBOT, all development and implementation of the developer's software system library is owned by the developer. That is, from the definition of the performance curves and the name of the abstract component, all subsequent development corresponds to the developer. The SIMBOT therefore respects the intellectual property of the developer, who keeps his development system intact without the need to make the programming of its components public. </p>
+  </section>
+
+  <section id="certifiers-and-testing-laboratories">
+    <h2>Certifiers and testing laboratories</h2>
+    <p> Performance curves can be constructed from public information from the manufacturer in product specifications or data sheets. In some cases, these properties are certified by third parties, and the information incorporated responds to standardized test conditions. The development of SIMBOTs does not require anything new in relation to the functional information that already exists today. </p>
+  </section>
+
+  <section id="annex-a" class="informative">
+    <h2>Annex A: SIMBOT example of Air ventilated server in a data center</h2>
+    
+    <section id="functional-concept-server">
+      <h3>Functional concept of the server SIMBOT</h3>
+      <p>
+        The same equipment may have several ways to be conceptualize. In this example case, an air ventilated server of the market (2P 2U HPE ProLiant DL180 Gen10) is circulating air through the box to keep the CPU temperature under control. It can be considered the CPU LOAD as input. Based on CPU LOAD demand value, we can be calculating the Tcpu (CPU temperature), the Qd (dissipated heat power (W)), the Qv_in and the Qv_out (mass flow ventilation in kg/s) and the NOISE generated by the air flow.
+      </p>
+
+      <figure id="fig-server-functional-concept">
+        <img src="../images/A1.jpg" alt="Functional concept of server SIMBOT" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Functional concept of server SIMBOT</figcaption>
+      </figure>
+
+      <table class="simple">
+        <thead>
+          <tr>
+            <th>Variable / Term</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CPU LOAD</strong></td>
+            <td>It is the process demand in % of the CPU</td>
+          </tr>
+          <tr>
+            <td><strong>Intensity (Amp)</strong></td>
+            <td>Electrical intensity Amp absorbed from the power network (Amp)</td>
+          </tr>
+          <tr>
+            <td><strong>Tcpu</strong></td>
+            <td>CPU temperature (C)</td>
+          </tr>
+          <tr>
+            <td><strong>Qd</strong></td>
+            <td>Dissipated heat by the CPU which is added to the circulated air inside the server box (W)</td>
+          </tr>
+          <tr>
+            <td><strong>Qv in</strong></td>
+            <td>Mass Air flow entering the box in Kg/s</td>
+          </tr>
+          <tr>
+            <td><strong>Qv out</strong></td>
+            <td>Mass Air flow going out the box in Kg/s with increased temperature</td>
+          </tr>
+          <tr>
+            <td><strong>NOISE</strong></td>
+            <td>Noise dissipated by the box in DB’s</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <section id="server-simbot-general-table">
+        <h4>Server SIMBOT information: general information</h4>
+        <p>The general information of the server SIMBOT can be summarized in the following table.</p>
+        
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Manufacturer</strong></td>
+              <td>HP</td>
+            </tr>
+            <tr>
+              <td><strong>Model</strong></td>
+              <td>HPE DL180 Gen10 8LFF</td>
+            </tr>
+            <tr>
+              <td><strong>Discipline</strong></td>
+              <td>DATA CENTERS</td>
+            </tr>
+              <td><strong>Abstract component</strong></td>
+              <td>AbsServer</td>
+            </tr>
+            <tr>
+              <td><strong>Version</strong></td>
+              <td>0.0</td>
+            </tr>
+            <tr>
+              <td><strong>Date</strong></td>
+              <td>9APR2026</td>
+            </tr>
+            <tr>
+              <td><strong>Power</strong></td>
+              <td>1000 W</td>
+            </tr>
+              <td><strong>Status</strong></td>
+              <td>DEMO</td>
+            </tr>
+            <tr>
+              <td><strong>Annotations</strong></td>
+              <td>For demo purposes only</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="simbot-io-parameters">
+        <h4>SIMBOT input, outputs and parameters for SMTS</h4>
+        <p>
+          In case of this concept of air ventilated server, we consider INPUT the CPU_LOAD. This would be the demand processing of the server (instantaneous or the mean value over a period of time). We can use the OUTPUT of one of the performance curves as INPUT for another relationship. For example, we can use the mass flow as INPUT to calculate the NOISE.
+        </p>
+        <p>
+          From the CPU_LOAD several outputs are calculated. The mathematical relationship (performance curves) is described in the following table.
+        </p>
+        
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Performance curve</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CPU_LOAD_vs_Power</strong></td>
+              <td>{{0,100}, {2.5,26.3}}</td>
+              <td>Table of CPU_LOAD (%) vs Qd (W)</td>
+            </tr>
+            <tr>
+              <td><strong>CPU_LOAD_vs_Tcpu</strong></td>
+              <td>{{0,100}, {30,90}}</td>
+              <td>Table of CPU_LOAD (%) vs Tcpu (C)</td>
+            </tr>
+            <tr>
+              <td><strong>CPU_LOAD_vs_m</strong></td>
+              <td>{{0,100},{0,2.27×10<sup>-2</sup>}}</td>
+              <td>Table of CPU_LOAD (%) vs mass flow (kg/s)</td>
+            </tr>
+            <tr>
+              <td><strong>CPU_LOAD_vs_Amp</strong></td>
+              <td>{{0,100}, {0.5,10}}</td>
+              <td>Table of CPU_LOAD (%) vs Amp (A)</td>
+            </tr>
+              <td><strong>Qv_vs_Noise</strong></td>
+              <td>{{0.,2.27×10<sup>-2</sup>}, {35,65}}</td>
+              <td>Table of Qv (kg/s) vs Noise level (dB) for noise level</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section id="semantic-information-server">
+      <h3>Semantic information of the server SIMBOT</h3>
+      <p>
+        The information related to a SIMBOT will be expressed in a knowledge graph following a specific ontology. The semantic content or knowledge about a SIMBOT shall be expressed in triples following the standards RDF/OWL.
+      </p>
+      <aside class="note" title="More Information">
+        More information about RDF/OWL standards can found in the following specification links: 
+        <a href="https://www.w3.org/RDF/" target="_blank">W3C RDF Specification</a> and 
+        <a href="https://www.w3.org/OWL/" target="_blank">W3C OWL Specification</a>.
+      </aside>
+    </section>
+
+    <section id="vendor-library-implementation">
+      <h3>Implementation of SIMBOT in library of software vendor</h3>
+      <p>
+        As an example, a software vendor could be integrating the information of the SIMBOT in a component following the code structure below.
+      </p>
+       <figure id="fig-server-functional-concept">
+        <img src="../images/A3.png" alt="code structure" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Example of software vendor library component configuration using SIMBOT semantics</figcaption>
+      </figure>
+      <p>
+        In this component we can see it is included in a library called <code>DC_COMPONENTS</code> (Data Center components), the name of the component is the name in the <code>HP_HPE_DL180</code>, it is using an abstract component of the vendor called <code>AbsSERVER</code> and the performance curves are included in the <code>DECLS</code> section of the code.
+      </p>
+      <p>
+        The vendor can assign a symbol to the component and work in schematic model, connecting the component with other components of the vendor or other SIMBOTs translated into components.
+      </p>
+    </section>
+
+    <section id="integration-deck-generation">
+      <h3>Integration in a model, deck generation</h3>
+      <p>
+        In the following figure, the server SIMBOT as library component of the vendor inserted in a schematic of a rack is included.
+      </p>
+          <figure id="fig-rack-schematic-example">
+        <img src="../images/A4.jpg" alt="Example of schematic including the library component created with the SIMBOT HP_HPE_DL180" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Example of schematic including the library component created with the SIMBOT HP_HPE_DL180</figcaption>
+      </figure>
+
+      <table class="simple">
+        <thead>
+          <tr>
+            <th>Indicator</th>
+            <th>Definition Space</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Red circle</strong></td>
+            <td>One of the components created based on the server SIMBOT</td>
+          </tr>
+          <tr>
+            <td><strong>Y</strong></td>
+            <td>Definition boundary alignment value for Y tracking</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <aside class="note">
+        In the rack schematic other components as switches and hard disks are included. All of them are connected with fluid ports to spaces and other vendor components.
+      </aside>
+
+    </section>
+  </section>
+
+  <section id="bibliography">
+    <h2>Bibliography</h2>
+    <ol>
+      <li id="bib-1">
+        SPHERE EU PROJECT Grant Agreement No. 820805. “From BIM representation to functional simulation and real time advanced control”, 
+        <a href="https://sphere-project.eu/download/from-bim-representation-to-functional-simulation-and-real-time-advanced-control/" target="_blank">https://sphere-project.eu/download/from-bim-representation-to-functional-simulation-and-real-time-advanced-control/</a>
+      </li>
+      <li>EN 18162:2026 Building Information Modelling (BIM) - Digital twins applied to the built environment - Concept and definitions</li>
+      <li>ISO/IEC 30173:2023 Digital twin — Concepts and terminology</li>
+      <li>ISO/IEC 30186:2025 Digital twin — Maturity model and guidance for a maturity assessment</li>
+    </ol>
+  </section>
+
+</body>
+</html>

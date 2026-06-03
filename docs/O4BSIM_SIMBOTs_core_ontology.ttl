@@ -1,0 +1,113 @@
+@prefix :       <http://www.example.org/> .
+@prefix base:   <https://w3id.org/def/basicsemantics-owl#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix saref:  <https://saref.etsi.org/core/> .
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix simbot: <http://buildingdigitaltwin.org/simbot/def/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix sml:    <https://w3id.org/sml/def#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+simbot:hasDiscipline  rdf:type  owl:ObjectProperty;
+        skos:definition  "A specialized engineering domain, functional classification, or technical field used to group simulation"@en;
+        skos:prefLabel   "has discipline" .
+
+simbot:Document  rdf:type  owl:Class;
+        rdfs:subClassOf  sml:InformationObject;
+        skos:definition  "Fixed and structured amount of information that can be managed and interchanged as a unit between users and systems (source: IEC 82045-1)."@en;
+        skos:prefLabel   "document" .
+
+simbot:hasModel  rdf:type       owl:DatatypeProperty;
+        rdfs:range              xsd:string;
+        owl:equivalentProperty  saref:hasModel;
+        skos:definition         "Specific model of the equipment. This shall not be a generic description or a series of models, but a precise market model."@en;
+        skos:prefLabel          "has model" .
+
+skos:prefLabel  rdf:type  owl:DatatypeProperty;
+        rdfs:range      xsd:string;
+        skos:prefLabel  "name" .
+
+simbot:hasManufacturer
+        rdf:type                owl:DatatypeProperty;
+        rdfs:range              xsd:string;
+        owl:equivalentProperty  saref:hasManufacturer;
+        skos:definition         "Original manufacturer (not reseller). Owner intellectual property, specifications and controlling the update, downgrade or recycling."@en;
+        skos:prefLabel          "has manufacturer" .
+
+skos:note  rdf:type     owl:AnnotationProperty;
+        skos:prefLabel  "Note" .
+
+simbot:hasStatus  rdf:type  owl:ObjectProperty;
+        skos:definition  "Status is a property that classifies the current lifecycle or market readiness stage of a SIMBOT component."@en;
+        skos:prefLabel   "has status" .
+
+:69f4aedd1027de6ff0e41704
+        rdf:type        sh:NodeShape;
+        sh:property     [ sh:class  simbot:Document;
+                          sh:path   sml:isDescribedBy
+                        ];
+        sh:property     [ sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:path      simbot:hasManufacturer
+                        ];
+        sh:property     [ sh:maxCount  1;
+                          sh:path      simbot:hasStatus
+                        ];
+        sh:property     [ sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      skos:prefLabel
+                        ];
+        sh:property     [ sh:datatype  xsd:integer;
+                          sh:maxCount  1;
+                          sh:path      simbot:hasPower
+                        ];
+        sh:property     [ sh:path  simbot:hasPerformanceCurve ];
+        sh:property     [ sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:path      simbot:hasModel
+                        ];
+        sh:property     [ sh:maxCount  1;
+                          sh:path      simbot:hasDiscipline
+                        ];
+        sh:targetClass  simbot:Device .
+
+simbot:hasPower  rdf:type  owl:DatatypeProperty;
+        rdfs:range       xsd:integer;
+        skos:definition  "The nominal operational or design power rating of the physical equipment, expressed as a numerical value in Watts (W), serving as a baseline capacity parameter for the simulation model"@en;
+        skos:prefLabel   "has power" .
+
+sml:isDescribedBy  rdf:type  owl:ObjectProperty;
+        skos:prefLabel  "is described by" .
+
+:6a16aa7680ab414b8593538c
+        rdf:type        sh:NodeShape;
+        sh:property     [ sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      skos:prefLabel
+                        ];
+        sh:targetClass  simbot:Document .
+
+:       rdf:type     owl:Ontology;
+        rdfs:label   "SIMBOTs core ontology";
+        owl:imports  sh: , rdfs: , owl: .
+
+simbot:hasPerformanceCurve
+        rdf:type         owl:ObjectProperty;
+        skos:definition  "Graphical representation illustrating the relationship between a machine's or system's output capabilities and its operational inputs. These curves are used to predict performance under varying conditions, optimize efficiency, and ensure equipment is properly sized for specific applications."@en;
+        skos:prefLabel   "has performance curve" .
+
+rdfs:range  rdf:type    owl:AnnotationProperty;
+        skos:prefLabel  "Datatype" .
+
+skos:definition  rdf:type  owl:AnnotationProperty;
+        skos:prefLabel  "Description" .
+
+simbot:Device  rdf:type      owl:Class;
+        rdfs:subClassOf      sml:RealObject;
+        skos:closeMatch  	 saref:Device;
+        skos:definition      "A semantic expression of the mathematical model of a market equipment describing its functionality, alternatively called a SIMBOT. It is oriented to real time execution, and it is in agreement with the manufacturer performance description. This mathematical model should be “parameter free”"@en;
+        skos:prefLabel       "device" .

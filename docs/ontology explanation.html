@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> 04BSIM ontology explanation</title>
+  
+  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" async></script>
+  
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "draft-finding", 
+      shortName: "simbots-simulation-models-ontology",
+      publishDate: "2026-05-25", 
+      
+      authors: [{ 
+          name: "Apostolis Barekas", 
+          company: "Semmtech",
+          companyURL: "https://semmtech.com/"
+      }],
+      editors: [{
+          name: "Apostolis Barekas", 
+          company: "Semmtech",
+          companyURL: "https://semmtech.com/"
+      }],
+      
+      github: "https://github.com/PabloVicenteLegazpi/O4BSIM",
+
+      logos: [{
+        src: "https://i0.wp.com/eu4dbp.net/wp-content/uploads/2023/03/BDTA.png?fit=634%2C234&ssl=1",
+        alt: "Building Digital Twin Association",
+        height: 50,
+        url: "https://buildingdigitaltwin.org/"
+      }],
+
+      // Configures the specification header table to perfectly replicate ontology indexing boxes
+    otherLinks: [ {
+        key: "Prefix and namespace declaration",
+        data: [{
+          value: "@prefix simbot: <http://buildingdigitaltwin.org/simbot/def/> .",
+          vaklue: "PREFIX simbot: <http://buildingdigitaltwin.org/simbot/def/>"
+        }]
+      }, {
+        key: "Download serialization",
+        data: [
+          { value: "Turtle (Core Ontology)", href: "SIMBOTs_core_ontology.ttl" },
+          { value: "Turtle (Reference Library)", href: "SIMBOTs_Reference_Library.ttl" }
+        ]
+      }],
+        
+      additionalCopyrightHolders: '<a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and',
+      license: "cc-by"
+    };
+  </script>
+
+  <style>
+    /* --- THEMATIC COPYRIGHT BOX STYLING --- */
+    p.copyright {
+      /*background-color: #f0fdfa !important; */
+      /*border-left: 4px solid #0d2c54 !important;*/
+      padding: 12px 15px !important;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-top: 15px !important;
+      margin-bottom: 15px !important;
+    }
+    p.copyright a {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    /* --- BULLETPROOF RE-SPEC TABLE OVERRIDES --- */
+    html body table.simple {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      margin: 30px 0 !important;
+    }
+    
+    /* Forces corporate dark navy headers */
+    html body table.simple th {
+      background-color: #0d2c54 !important;
+      color: white !important;
+      padding: 12px !important;
+      text-align: left !important;
+      border: 1px solid #0d2c54 !important;
+    }
+    
+    /* Forces baseline white table cells with clean padding */
+    html body table.simple td {
+      padding: 12px !important;
+      border: 1px solid #e2e8f0 !important;
+      background-color: #ffffff !important; 
+    }
+    
+    /* Forces the row hover lighting effect directly onto the cells */
+    html body table.simple tbody tr:hover td {
+      background-color: #f0fdfa !important; 
+      cursor: default;
+    }
+    
+    /* Forces the custom line-highlight layout rule */
+    html body table.simple tbody tr.highlight td {
+      background-color: #e0f2fe !important; 
+    }
+    
+    /* Adds the solid blue accent edge line to highlighted table entries */
+    html body table.simple tbody tr.highlight td:first-child {
+      border-left: 4px solid #0284c7 !important;
+    }
+    /* --- CAPSULE PILL BUTTONS FOR DOWNLOADS --- */
+    .head dd a[href$=".ttl"] {
+      display: inline-flex !important;
+      align-items: center !important;
+      background-color: #eff6ff !important; /* Soft light blue background */
+      color: #1e40af !important;            /* Professional deep blue text */
+      border: 1px solid #bfdbfe !important;  /* Clean accent border */
+      padding: 4px 12px !important;
+      margin: 4px 6px 4px 0 !important;
+      border-radius: 9999px !important;      /* Perfect capsule shape */
+      font-size: 0.85em !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+      transition: all 0.2s ease-in-out !important;
+    }
+    
+    /* Interactive Hover State */
+    .head dd a[href$=".ttl"]:hover {
+      background-color: #3b82f6 !important; /* Solid blue highlight */
+      color: #ffffff !important;            /* White text on hover */
+      border-color: #3b82f6 !important;
+      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+      transform: translateY(-1px) !important;
+      cursor: pointer !important;
+    }
+  </style>
+
+  <script>
+    (function() {
+      var bdtaCopyright = 'Copyright © 2026 <a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and text is distributed under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0 License</a>.';
+      
+      function enforceCopyright() {
+        var el = document.querySelector("p.copyright");
+        if (el && el.innerHTML !== bdtaCopyright) {
+          el.innerHTML = bdtaCopyright;
+        }
+      }
+      // FIXED: Uses safe relative pathing and adds the mandatory 'px' layout unit
+        if (!document.getElementById("left-status-banner")) {
+          var img = document.createElement("img");
+          img.id = "left-status-banner";
+          img.src = "C:/Users/Apostolis Barekas/Apo - Code/SIMBOT - ReSpec/images/DRAFT.svg"; 
+          img.alt = "Status Ribbon";
+          
+          img.style.setProperty("position", "fixed", "important");
+          img.style.setProperty("left", "0px", "important"); 
+          img.style.setProperty("top", "0px", "important");
+          img.style.setProperty("width", "30px", "important");
+          img.style.setProperty("height", "460px", "important");
+          img.style.setProperty("z-index", "999999", "important");
+          img.style.setProperty("display", "block", "important");
+          
+          document.documentElement.appendChild(img);
+        }
+
+      var observer = new MutationObserver(enforceCopyright);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+
+      document.addEventListener("respecDone", function() {
+        if (!document.getElementById("left-status-banner")) {
+          var img = document.createElement("img");
+          img.id = "left-status-banner";
+          img.src = "../images/DRAFT.svg"; 
+          img.alt = "Status Ribbon";
+          img.style.cssText = "position: fixed !important; left: 0px !important; top: 0px !important; width: 30px !important; height: 280 !important; z-index: 7999999 !important; display: block !important; margin: 0 !important; padding: 0 !important;";
+          document.documentElement.appendChild(img);
+        }
+        enforceCopyright();
+      });
+    })();
+  </script>
+</head>
+<body>
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p>
+    SIMBOT ontology is a semanti model which aims to form a shared model of consensus to enable semantic interoperability between 
+    solutions from different providers and to reduce the cost and time implementation of simulation models. 
+    The ontology adheres to the modelling style described in the CEN EN 17632-1:2022. The CEN EN 17632-1:2022 is a European standard
+    for data modelling.
+  </p>
+</section>
+
+<section id="introduction">
+  <h2>Introduction</h2>
+
+    <section id="scope-of-application">
+      <h3>Scope of application</h3>
+      <p>
+        This document is written as a supplement the Mathematical simulation models for real time, SIMBOTs. The focus of this document is to 
+        give an explanation and guidance on the usage of SIMBOT ontology. 
+        This ontology provides a basis for a common vocabulary for information re-use to reduce the cost and time implementation of simulation models. 
+      </p>
+    </section>
+
+    <section id="goal">
+      <h3>Goal</h3>
+      <p>The goal of this document is:</p> 
+      <ol>
+        <li>To explain the concepts behind the ontology; </li>
+        <li>To describe the structure of the ontology; </li>
+        <li>To describe the structure of the SIMBOT reference library; </li>
+      </ol>
+      <p> This methodology helps to improve the collaboration between manufacturers and software developers, reducing the time and cost of model implementation. </p>
+    </section>
+
+    <section id="structure">
+      <h3>Structure</h3>
+      <p>This document starts out stating the basic concepts and thoughts behind the ontology. After this, an overview of the libraries and the main structure of the ontology is explained.
+        This is followed by some guidance on different forms of application of the ontology 
+      </p>
+    </section>
+
+</section> 
+
+
+  
+
+<section id="basic concepts">
+    <h2>Basic concepts</h2>
+    <section id= "introduction">
+        <h3>Introduction</h3>
+        <p>The Oxford Living Dictionary defines an ontology as "a set of concepts and categories in a subject area or domain that shows their properties and the relations between them." 
+          BDTA provides a formal ontology , specifying a shared vocabulary, and the constraints included with these concepts. 
+          The reason BDTA is applying an ontology within its information landscape is to help the transfer of information between applications or stakeholders, 
+          to formalise and standardise the vocabulary used to express information and to efficiently reuse information. </p>
+          
+        <p> The ontology forms a network of information, consisting of concepts and statements about these concepts, that are applicable on mathematical simulations, 
+          and to which the information in a project can refer. </p>
+
+        <p>The ontology for example contains information about a hard disk drive that can be used in a datacenter, such as its model, 
+          its manufacturer, and the input and output values of a performance curve that are related to it. </p>
+      </section>
+
+    <section id="data-levels">
+      <h3>Data Arcitecture</h3>
+      <p>
+        For effective (re)use of simulation knowledge, data is split into several levels. The pyramid in Figure 1 shows, from top to bottom, the different levels that need to be dealt with.
+        This ontology utilizes Linked Data methodologies (specifically RDF<sup><a href="https://www.w3.org/RDF/">1</a></sup>) to exchange vendor-neutral mathematical models in a semantically rich manner.
+      </p>
+      <p>
+        To prevent arbitrary modeling patterns, the data structure relies heavily on a foundational core model. 
+        The SIMBOT core ontology provides this foundation. The CEN EN 17632-1:2022, provides such a core model that can 
+        be used as a starting point to classify data. It also offers a set of modelling rules, to ensure that the same unified modelling approach is used.
+      </p>
+
+      <p>
+        At the highest level of abstraction, the architecture implements the core principles of CEN EN 17632-1:2022. 
+        The core standard defines the basic very generic types, such as "Real object", "Document" or "Information object". 
+        On top of that, some relations are defined (e.g., a Real object is described by an Information object). If these basic relations do not fully cover the required use cases, 
+        it is possible to extend the core model. For example, in the core ontology of simbot, the class <code>Device</code> was added in order to standardize its functional and performance
+        properties whcih are necessary such as the <code>model</code> or the <code>performance curves</code>.
+
+      <figure id="fig-data-arc-levels">
+          <img src="../images/Data information levels.jpg" alt="The four data levels" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+          <figcaption>The four data levels</figcaption>
+      </figure>
+ 
+      <p>
+        The next level defines what needs to be registered: this is called reference data library. This library is still about abstract things, which can not be seen or pointed at 
+        ("a server" or "a datasheet"). On top of adding more specific concepts, the OTL can define the information need for such concepts. For exanple, in this level we might be intrested
+        in details about the model and the manyfacturer of the devices. 
+      </p>
+      <p>
+        Based on the classes defined in the domain layer, specific equipment instances represent precise market models populated with actual manufacturer specifications. 
+        For example "Server_01 has power 200 Watt". Because we have formally defined the language, structure, and the information need, it is possible to check whether the 
+        simulation data conforms to these definitions. In this example, we could conclude that the wrong unit of measure is used to define the diameter of the duct 
+        (kilowatt instead of watt).
+      </p>
+    </section>
+
+    <section id= "form and formalism">
+        <h3>Form and Formalism</h3>
+        <p>The ontology is expressed in linked data, which can be queried using the SPARQL query language. At the basis of all these lie a few rules:  </p>
+        <ol>
+          <li>Every entity or concept is identified using a URI (Universal Resource Identifier). </li>
+          <li>Information is expressed in the form of triples (Subject, Predicate, Object).  </li>
+      </ol>
+      </section>
+
+    <section id= "taxonomy">
+        <h3>Taxonomy</h3>
+        <p> Crucial to the architecture of the ontology is the concept of a taxonomy—a hierarchical structure where child concepts represent narrower, 
+            more specialized variations of their parent concepts. 
+            Through the principle of inheritance, any semantic properties, or restrictions defined at a higher level must hold true for the more specialized concepts. 
+            This taxonomic relationship is formally expressed using the <code>rdfs:subClassOf</code> property.
+        </p>
+        <p>
+          One example of a taxonomy is the distinction between types of devices. Every type of device is its own concept, 
+          but they are all more specific versions of the concept ‘device’. Anything that holds true for a ‘device’, such as the fact that it supplies 
+          is valid for any subtype of device. 
+        </p>
+        <p>The concept of a taxonomy is applied throughout the entire ontology, ranging from different types of real objects, 
+          different types of documents, or different kinds of information on a broader level. 
+        </p>
+      </section>
+
+      <section id= "classification">
+        <h3>Classification</h3>
+        <p> Another main concept behind the ontology is the concept of classification. The ontology mainly consists of kinds of things. It expresses things which mostly occur more than once. 
+           But in the real world, we are often concerned with stating things (details) about individual things. Things that have a certain place and/or time in the real world, such as a substation.
+           Through the mechanism of classification, we can state that a certain individual thing belongs to a certain type of thing and thus behaves as that type of thing.  
+        </p>
+        <p>
+          For example, for the fictitious datacenter ‘Datacenter 01’, the ‘Hard Disk 01’ is classified as the concept ‘Exos X20 20TB (SATA/SAS 7200rpm)’.  
+        </p>
+      </section>
+
+      <section id= "restrictions">
+        <h3>Restrictions</h3>
+        <p> The ontology specifies certain restrictions for its concepts, to ensure consistent and qualitative data management. 
+            These restrictions are mostly in the form of limitations by which attributes and relations can or should be provided for a concept.    
+        </p>
+        <p>
+          The following type of restrictions are applied within the ontology:
+        </p>
+        <ol>
+          <li>Cardinality – The cardinality of a property (or relation) defines how many occurrences of a thing there are. This is used to state that, for example,
+            a device should have at least 1, and at most 1 property ‘prefLabel’ (a property used to indicate its name).   </li>
+          <li>Domain – The domain of a property (or relation) defines which types of things a certain property can be applied to. Domain points to subject of a triple. </li>
+          <li>Range – The range of a property defines what type of thing that property (or relation) can refer to and points to the object of a triple. 
+              An example would be to state that the ‘is described by’ relation can only point to a Document, or that the ‘status’ property can only refer to 
+              a valid/specified string (e.g "Validated"). </li>
+        </ol>
+      </section>
+
+      <hr>
+      <aside class="footnotes" role="doc-endnotes">
+        <p id="fn-rdf">
+          <a href="#fnref-rdf" role="doc-backlink">↩</a> 
+          <sup>1</sup> <a href="https://www.w3.org/RDF/">https://www.w3.org/RDF/</a>
+        </p>
+      </aside>
+</section>
+   
+
+<section id="structure">
+    <h2>Structure</h2>
+    <p>
+      The SIMBOT ontology consists of the core model, and the reference library. 
+      These libraries are linked together by references to each other.   
+    </p>
+    <p>
+      The ontology is structured according to the CEN EN 17632-1:2022, adhering to its conceptual meta-model. 
+      To meet BDTA's specific information needs, additional top concepts have been incorporated where relevant. As a result, the following taxonomic hierarchy is used: 
+    </p>
+      <ul>
+        <li>
+          <a href="https://w3id.org/sml/def#RealObject" title="https://w3id.org/sml/def#RealObject">
+            real object
+          </a>
+          <ul>
+            <li>
+              <a href="http://buildingdigitaltwin.org/def/Device" 
+                title="http://buildingdigitaltwin.org/simbot/def/Device" 
+                onclick="return false;" 
+                style="color: inherit; text-decoration: none; cursor: default;">
+                device
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="https://w3id.org/sml/def#InformationObject" title="https://w3id.org/sml/def#InformationObject">
+            information object
+          </a>
+          <ul>
+            <li>
+              <a href="http://buildingdigitaltwin.org/def/Document" 
+                title="http://buildingdigitaltwin.org/simbot/def/Document" 
+                onclick="return false;" 
+                style="color: inherit; text-decoration: none; cursor: default;">
+                document
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    <section id="ontology-definitions">
+        <h3>Definitions</h3>
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Definition</th>
+              <th>Remark</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><a href="https://w3id.org/sml/def#RealObject" title="https://w3id.org/sml/def#RealObject">Real object</a></strong></td>
+              <td>physical object (rigid or non-rigid) that is (or can be) tangible and visible in reality, man-made or naturally occurring .</td>
+            </tr>
+            <tr>
+              <td><strong><a href="https://w3id.org/sml/def#InformationObject" title="https://w3id.org/sml/def#InformationObject">Information object</a></strong></td>
+              <td>Object which describes a thing in reality.</td>
+            </tr>
+            <tr>
+              <td><strong>Device</strong></td>
+              <td>A semantic expression of the mathematical model of a market equipment describing its functionality, alternatively called a SIMBOT. It is oriented to real time execution, 
+                  and it is in agreement with the manufacturer performance description. This mathematical model should be “parameter free”<sup>1</sup></td>
+              <td> BDTA introduces many specializations of this concept, which are referred to as a SIMBOT Reference Library </td>
+            </tr>
+            <tr>
+              <td><strong>Document</strong></td>
+              <td>Fixed and structured amount of information that can be managed and interchanged as a unit between users and systems (source: IEC 82045-1).</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    <section id="simbot-core-ontology">
+        <h3>Core ontology </h3>
+        <p>
+          The core ontology describes the structure defined at the start of this chapter.
+          <figure id="fig-simbot-ontology-uml">
+          <img src="../images/SIMBOT_ontology_UML.jpg" alt="SIMBOTs ontology information model" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+          <figcaption>SIMBOTs ontology information model</figcaption>
+      </figure>
+        </p>
+    </section>
+    <section id="simbot-reference-library">
+        <h3>Reference Library</h3>
+            <p>
+              The SIMBOT Reference Library outlines specific manufacturer equipment and market models. It provides a detailed taxonomy of equipment types and  organizes 
+              products into three key categories, : Servers, Storage and Switches. 
+            </p>
+            <p>
+              The library is designed to go beyond a basic classification system by focusing  on the mathematical and functional description of an equipment type. 
+              Each cataloged entry incldes essential details about the model of each product and its performance by expressing output capabilities and its operational inputs.
+              
+            </p>
+            <p>
+              The library helps to improve the collaboration between manufacturers and software developers, reducing the time and cost of model implementation. 
+              This infotmation is essential to predict performance under varying conditions, optimize efficiency, and ensure equipment is properly sized for specific applications.
+            </p> 
+            <p>
+              The detailed models and specification schemas of the reference library are presented sequentially inside 
+              <a href="#annex-a">Annex A - Reference Library Information Model</a>.
+            </p>
+            
+    </section>
+</section>
+    
+<section id="simbot-ontology-application">
+  <h2>Application</h2>
+  <p>The ontology can be applied in both formal and informal way, where a formal way is the application of the ontology with a formal language such as RDF, 
+    and the informal way is through purely textual reference. This document will mainly focus on the formal application of the ontology but will briefly touch 
+    upon the subject of the informal use. It will also shortly discuss a hybrid approach.
+  </p>
+  <section id="informal-use">
+    <h3>Informal Use</h3>
+    <p>One of the core reasons behind the ontology is to create a shared vocabulary. While this ontology is mostly geared towards use with formal languages such as RDF, 
+      it is also possible to apply the ontology informally. This is done by choosing preferred terms from the ontology, instead of creating and applying own terms to express a concept. 
+    </p>
+  </section>
+  <section id="hybrid-use">
+    <h3>Hybrid Use</h3>
+    <p>
+      Not every application is equipped to express information in the RDF form. But it is still possible to partially express information according to the ontology in this form. 
+      This is mainly done by explicitly stating the URI something refers to, while not expressing the data in RDF. 
+    </p>
+    <p>
+      An example of this approach would be to include the URI of the concept “Server” in the “ClassificationUri” property in an a model. 
+    </p>
+  </section>
+  <section id="formal-use">
+    <h3>Formal Use</h3>
+    <p>
+      To formally use the ontology, information has to be expressed in a formal language such as RDF. The ontology can be used to classify individual things, 
+      or to specialize concepts further to express speciifc knowledge. This formal use can be done through the use of any RDF serialization such as Turtle (.ttl) or JASON-LD (.jsonld).
+    </p>
+  </section>
+</section>
+
+<section id="annex-a">
+  <h2>Annex A: Information model of Reference Library</h2>
+  <p>
+    The SIMBOTs reference library describes the types of devices, their formal definitions, and explicit connections to  properties. 
+    At the highest level, the organizational framework divides all library concepts into two primary categories: 
+    Real Objects and documents . 
+  </p>
+  <p>
+    Let’s explore the contents of the library in detail. The Reference library includes all devices that are <code>rdfs:subClassOf</code>
+    real objects. Figure 2 provides a conceptual overview of the 
+    concepts and relationships described in the SIMBOT's Reference library. The main class <code>Device</code> of the library is
+    linked to documents, and properties or alternatively referred to as aspects.
+  </p>
+  <p>
+    Each block of the library is organized into 3 sections. In the Reference library, the explanation of each section is as follows
+  </p>
+  <ul>
+    <li> <Strong>Name of block</Strong>
+      <ul>
+        <li> Superclass: refer to figure for detailed classification.</li>
+      </ul>
+    </li>
+    <li> <Strong>CLassifiers</Strong>
+      <ul>
+        <li> <code>rdf:type</code></li>
+        <li> <code>rdf:subClassOf:</code> This indicates that each class is a subclass of a superclass, in this case,
+              superclasses are <code>simbot:Device</code> and <code>simbot:Document</code>. From <a href="#fig-simbot-ontology-uml"></a>
+              , it can also be seen that <code>simbot:Device</code> and <code>simbot:Document</code> are subclasses of <code>sml:RealObject</code>,
+              <code>sml:InformationObject</code> which means that the concept inherits properties and characteristics from their
+              respective superclasses as defined in the SML standards.
+        </li>
+      </ul>
+    </li>
+    <li> <Strong>Metadata</Strong>
+      <ul>
+        <li> <code>skos:prefLabel/PrefName:</code> is the primary name assigned to a device or document in the reference library. </li>
+        <li> <code>skos:definition:</code> provides a textual description of the concept, explaining what it is and possibly 
+              how it should be used or interpreted. This helps users understand the precise meaning and scope of 
+              the device described in the library.
+        </li>
+        <li> <code>skos:note:</code> provides a textual note for the concept. This helps users register general or administartive information for 
+              the device described in the library.
+        </li>
+        <li> <code>simbot:{UUID}</code> [Label included in brackets] (Data Type): Unique identifiers (URI’s), as shown in the 
+              UML diagram, provide information attributes for each class. 
+        </li>
+        <li> URI aspect of concepts: These URI’s point to the aspects of concepts and provide information attributes
+              for any class in the library. 
+        </li>
+      </ul>
+    </li>
+  <ul> 
+    <figure id="fig-reference-library-uml">
+        <img src="../images/SIMBOT_Reference_Library_UML-SIMBOT_Reference_Library.jpg" alt="Reference Library UML diagram" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Reference Library UML diagram</figcaption>
+      </figure>
+    <p>
+      <strong>Please note </strong> that in <a href="#fig-reference-library-uml"></a>, the relation sml:isDescribedBy
+      is displayed in dotted line with pink colour. These relations have specific restrictions. For detailed 
+      information on these restrictions, please refer to the section <a href="#Relations">Relations</a>.
+    </p>
+    <section id="Relations">
+      <h3>Relations</h3>
+      <p>
+         In this context, relations refer to the connections and constraints defined between specific classes within the library, helping to establish how 
+        different objects and concepts interact. <a href="#fig-relations-uml"></a> demonstrates the SHACL constraints of the library. 
+        The qualified value shape enforces that the target class must (or must not) include entities of a specified type, such as class B. 
+        For example, if class A is a 'HPE DL180 Gen10 8LFF' server the target class is 
+        required to include at least one instance of class B, such as a 'HPE DL180 Gen10 8LFF Spec Sheet' document, Here, the 'HPE DL180 Gen10 8LFF' server has the 
+        nen2660:isDescribedBy relationship with the 'HPE DL180 Gen10 8LFF Spec Sheet' class.
+      </p>
+      <figure id="fig-relations-uml">
+        <img src="../images/SIMBOT_Reference_Library_UML-Relations.jpg" alt="Relations of reference Library" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Relations of reference Library</figcaption>
+      </figure>
+    </section>
+    <section id="Aspects">
+      <h3>Aspects</h3>
+      <p>
+         The Aspect contains detailed and structured attributes for qualitative and quantitative data, as well as for 
+        relationships. This design allows for the inclusion of additional subtypes, enabling the creation of richer and 
+        more semantically detailed data models. These subtypes are <code>rdf:Property</code>, <code>owl:DatatypeProperties</code>
+        and <code>owl:ObjectProperties</code>. <a href="#fig-aspects-uml"></a> demonstrates the general approach to Aspect within the reference library.
+      </p>
+      <p>
+        The Aspect diagram starts with the validation of the target class through a <code>sh:NodeShape</code>. The
+        <code>sh:NodeShape</code> adds constraints on each instance through <code>sh:property</code> on three types of properties
+    </p>
+    <ul>
+      <li> <Strong> Qualified literal value aspects</Strong> with <code>sh:minCount</code> and <code>sh:maxCount</code> cardinality constraints. 
+          This block is connected to the aspect URI block which is datatype property through <code>sh:path</code>. 
+      </li>
+      <li> <Strong>Quantified unit aspects</Strong> with <code>sh:minCount</code> and <code>sh:maxCount</code> cardinality constraints. 
+        The constraints block is connected to three components:
+        <ul>
+          <li> <code>nen2660:QuantityValue</code> via <code>sh:class</code>. </li>
+          <li> Aspect URI , i.e, object type property, via <code>sh:path</code></li>
+          <li> Unit Constraints: Connects to a <code>sh:NodeShape</code> using sh:node and then via 
+                <code>sh:property</code> to the unit URI and its datatype. Unit URIs are accessible through 
+                <code>sh:hasValue</code>, with available units including
+          </li>
+          <ul>
+            <li> <a href="http://qudt.org/vocab/unit/W" title="http://qudt.org/vocab/unit/W">http://qudt.org/vocab/unit/W</a>
+            </li>
+          </ul>
+        </ul>
+      </li>
+      <li> <Strong> Enumeration Type node: </Strong> This node is associated with an aspect through the <code>simbot:list</code> URI, 
+          with an <code>rdf:type</code> of <code>rdf:List</code>. It is further connected to a class via the <code>rdf:first</code> and 
+          <code>rdf:type</code> paths. Essentially, the Enumeration type allows users to select from different options, 
+          represented by various types of a class, through the <code>rdf:first path</code>. This setup enables a 
+          structured way to present predefined choices within the data model.
+      </li>
+    </ul>
+  <P>
+    In this UML model, <code>owl:DatatypeProperties</code> and <code>owl:ObjectProperties</code> are 
+    <code>rdfs:subPropertyOf</code> a broader <code>rdf:Property</code>. Aspects and sub-aspects are 
+    reachable through <code>rdf:property</code> and <code>rdfs:subPropertyOf</code> <code>rdf:property</code>.
+  </p>
+      <figure id="fig-aspects-uml">
+        <img src="../images/SIMBOT_Reference_Library_UML-AspectModel.jpg" alt="Aspects of reference Library" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
+        <figcaption>Aspects of reference Library</figcaption>
+      </figure>
+</section>
+        
+
+  <section id="bibliography">
+    <h2>Bibliography</h2>
+    <ol>
+      <li>European Committee for Standardization. (2022). Building information modelling (BIM) — Semantic modelling and linking (SML) — Part 1: Generic modelling patterns (EN 17632-1:2022).</li>
+      <li>European Committee for Standardization. (2024). Building information modelling (BIM) - Semantic modelling and linking (SML) - Part 2: Domain-specific modelling patterns (EN 17632-2:2024).</li>
+      <li>European Committee for Standardization. (2026). Mathematical simulation models for real time, SIMBOTs (Draft CEN Workshop Agreement CWA XXXXX). UNE.</li>
+      <li>International Electrotechnical Commission. (2001). Document management — Part 1: Principles and methods (IEC 82045-1:2001). https://webstore.iec.ch/publication/7508</li>
+    </ol>
+  </section>
+
+</body>
+</html>
