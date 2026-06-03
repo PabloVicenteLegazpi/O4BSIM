@@ -4,8 +4,8 @@ This repository contains the O4BSIM ontology and Reference library for **SIMBOTs
 
 ## Overview
 
-- **Core Ontology File:** [`SIMBOTs_core_ontology.ttl`](O4BSIM_SIMBOTs_core_ontology.ttl)
-- **Reference Library File:** [`SIMBOTs_Reference_Library.ttl`](O4BSIM_SIMBOTs_Reference_Library.ttl)
+- **Core Ontology File:** [`O4BSIM_SIMBOTs_core_ontology.ttl`](O4BSIM_SIMBOTs_core_ontology.ttl)
+- **Reference Library File:** [`O4BSIM_SIMBOTs_Reference_Library.ttl`](O4BSIM_SIMBOTs_Reference_Library.ttl)
 - **Interactive Documentation:** - [Ontology Structural Explanation](docs/ontology%20explanation.html)
   - [SIMBOT Methodology & Context Explanation](docs/SIMBOT%20explanation.html)
 
