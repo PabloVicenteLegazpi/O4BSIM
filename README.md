@@ -11,8 +11,8 @@ The intention of this ontology and reference library is to have a demonstration 
 - **Interactive Documentation:** - [Ontology Structural Explanation](docs/ontology%20explanation.html)
   - [SIMBOT Methodology & Context Explanation](docs/SIMBOT%20explanation.html)
 
-- **Interactive documentation should be visible in the browser dorectly, see Digichecks ontology**
-   - **SERIALIZATIONS IN RDF, TTL, OWL, JSON-LD. ntriples...**
+- **Interactive documentation should be visible in the browser dorectly, see Digichecks ontology//explanation, it is not publish yet**
+   - **SERIALIZATIONS IN RDF, OWL, TTL...**
   - **Interactive documentation much follow the same format then digichecks ontology**
 
 ## Features
@@ -20,6 +20,8 @@ The intention of this ontology and reference library is to have a demonstration 
 - Core classes and properties for mathematical simulation models for real time.
 - SHACL shapes for data validation.
 - Alignment with existing standards (SML, RDFS, OWL etc.).
+
+**TO BE COMPLETED A BIT MORE**
 
 ## Getting Started
 
@@ -35,18 +37,20 @@ The intention of this ontology and reference library is to have a demonstration 
    # ...other prefixes...
    ```
 **Open ontology in protege and graphdb (free common tools, reference). Explain how to do it**
+**The ontology was generated and populated with LACES (Semmtech), future possible availability of viewer**
    **Please explain this thinking on manufacturers and software developers, alignment with future DPPs, functional information, device ontology**
    **Intention of the SIMBOTs and KG:... to comunicate equipment data between manufacturers and software developers**
    **MANUFACTURERS: how to load your equipment.., implementation of a cathalogue, contact for help, testing and verification**
    **Software developers: how to download equipment data, where to find help, what you can do...**
+   **THESE CAN BE A BRIEF EXPLANATION IN THE README FILE, AND LATER IN DETAILED DOCUMENTATION WE COULD ADDING EXAMPLES AND BETTER DESCRIPTION**
 
 4. **Validate data:**  
    Use the SHACL shapes provided in the ontology to validate your data.
 
-   **Note about SIMBOT validation, testing, certifications???**
+   **Note about SIMBOT (simulation) validation, testing, certifications, present as metadata in the simbot**
    
 ## FUNDING
-**added this topic**
+
 This research has received funding from the European Union’s Horizon Research and Innovation Program under EU project Hycool-IT GA No 101138623 (CWA standardization process), and project DYMAN GA No 101161930 (development of ontologies for data centers).
 
 ## License
@@ -69,23 +73,26 @@ https://www.cencenelec.eu/news-events/news/2026/workshop/20260408_hycool/
 ## Contact
 
 For questions or contributions, please open an issue or contact maintainers at p.legazpi@buildingdigitaltwin.org
-Content of the Knowledge Graph: pm.demiguel@buildingdigitaltwin.org
+Content of the **Knowledge Graph**: pm.demiguel@buildingdigitaltwin.org
 General question please contact info@buildingdigitaltwin
 https://buildingdigitaltwin.org/
 BDTA address: Borsbeeksebrug 34/1 2600 Antwerpen, Belgium
 
+*Add some details about Semmtech**
+
 ## Processes (BPMN)
+**JUST A BRIEF DSCRIPTION ABOUT THIS**
+
 **process 1: new manufacturer, model, new simbot, PACKAGE CONCEPT**
+
 **SIMBOT status, adding info, modifing SIMBOT info**
 **look up for a simbot, similar simbots, criteria (power, discipline, manufacturer,...**
-**downloading a simbot for a developer**
-**Massive download of SIMBOTs for a library**
-**Defining a new discipline**
-**Compiling a discipline: abstracts and meta info**
+**downloading/copying/transposing... a simbot for a developer - Massive download of SIMBOTs for a library**
+**Defining a new discipline (only one now) - Compiling a discipline: abstracts and meta info FOR THE FUTURE, NOT NOW**
 
 **we should be adding processes with tasks/responsible/roles for transparency**
 **STAKEHOLDERS for process 1: Manufacturer agent, BDTA onto editor/operator, BDTA supervisor, BDTA simulation editor/operator, public**
-**Maximum time response, reporting, rules to comply**
+**Maximum time response (about the processes), reporting, rules to comply**
 
 
 ---
