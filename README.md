@@ -48,6 +48,9 @@ The intention of this ontology and reference library is to have a demonstration 
    Use the SHACL shapes provided in the ontology to validate your data.
 
    **Note about SIMBOT (simulation) validation, testing, certifications, present as metadata in the simbot**
+
+> [!NOTE]
+> The onotlogy was Generated and populated using **[LACES (Semmtech)](https://laceshub.com/)**. A dedicated viewer tool is coming soon.
    
 ## FUNDING
 
