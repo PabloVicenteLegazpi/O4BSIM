@@ -46,6 +46,11 @@ This initial version delivers the core model (concepts, relations, and attribute
 4. **Validate data:**  
    Use the SHACL shapes provided in the ontology to validate your data.
 
+   **Note about SIMBOT (simulation) validation, testing, certifications, present as metadata in the simbot**
+
+> [!NOTE]
+> The onotlogy was Generated and populated using **[LACES (Semmtech)](https://laceshub.com/)**. A dedicated viewer tool is coming soon.
+   
 ## FUNDING
 
 This research has received funding from the European Union’s Horizon Research and Innovation Program under EU project Hycool-IT GA No 101138623 (CWA standardization process), and project DYMAN GA No 101161930 (development of ontologies for data centers).
