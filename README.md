@@ -40,16 +40,13 @@ This initial version delivers the core model (concepts, relations, and attribute
    - Manufacturers can structure their equipment catalogs using the core model.
    - Developers can use the equipment data to build apps that work across different software vendors. 
 
-> [!NOTE]
-> The ontology was generated and populated using **[LACES](https://laceshub.com/)**. 
-
 4. **Validate data:**  
    Use the SHACL shapes provided in the ontology to validate your data.
 
    **Note about SIMBOT (simulation) validation, testing, certifications, present as metadata in the simbot**
 
 > [!NOTE]
-> The onotlogy was Generated and populated using **[LACES (Semmtech)](https://laceshub.com/)**. A dedicated viewer tool is coming soon.
+> The onotlogy was Generated and populated using **[LACES](https://laceshub.com/)**. 
    
 ## FUNDING
 
