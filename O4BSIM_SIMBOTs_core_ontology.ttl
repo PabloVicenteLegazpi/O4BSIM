@@ -93,7 +93,8 @@ sml:isDescribedBy  rdf:type  owl:ObjectProperty;
 
 :       rdf:type     owl:Ontology;
         rdfs:label   "SIMBOTs core ontology";
-        owl:imports  sh: , rdfs: , owl: .
+        owl:imports  sh: , rdfs: , owl: ;
+        owl:versionInfo      "v2_1" .
 
 simbot:hasPerformanceCurve
         rdf:type         owl:ObjectProperty;
