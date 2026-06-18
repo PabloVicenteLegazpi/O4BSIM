@@ -1,10 +1,10 @@
 # SIMBOTs Core Ontology and Reference Library
 
-This repository contains the O4BSIM core model and Reference library for **SIMBOTs** (Mathematical Simulation models for real-time). The ontology is built on top of the **CEN EN 17632-1:2022 (Semantic Modelling and Linking — SML)** framework to enable clear communication and data reuse about mathematical simulations. It provides a standardised ontology designed to bridge the gap between equipment manufacturers and software developers. By establishing a shared semantic language, we enable seamless communication of functional equipment data and ensure alignment with future Digital Product Passport (DPP) requirements.
+This repository contains the O4BSIM core model and Reference library for **SIMBOTs** (Mathematical Simulation models for real-time). The ontology is built on top of the **CEN EN 17632-1:2022 (Semantic Modelling and Linking — SML)** framework to enable clear communication and data reuse about mathematical simulations. It provides a standardised ontology that bridges the gap between equipment manufacturers and software developers. By establishing a shared semantic language, we enable seamless communication of functional equipment data and ensure alignment with future Digital Product Passport (DPP) requirements.
 
-SIMBOT definition is following the specifications provided by the open CEN workshop 'Mathematical Simulation models for real time, SIMBOTs', which can be found in this link: https://www.cencenelec.eu/news-events/news/2026/workshop/20260408_hycool/.
+SIMBOT is defined according to the specifications provided by the open CEN workshop 'Mathematical Simulation models for real time, SIMBOTs', available at: https://www.cencenelec.eu/news-events/news/2026/workshop/20260408_hycool/.
 
-The intention of this ontology is to have a demonstration tool for future developments. Initially, SIMBOTs are developed for data centers of the pilots included in HYCOOL-IT EU project (GA No 101138623), and project DYMAN (GA No 101161930).
+The intention of this ontology is to have a demonstration tool for future developments. Initially, SIMBOTs are developed for the data centres of the pilots included in the HYCOOL-IT EU project (GA No 101138623) and the DYMAN project (GA No 101161930).
 
 ## Overview
 
@@ -68,7 +68,7 @@ https://www.cencenelec.eu/news-events/news/2026/workshop/20260408_hycool/
 
 For questions or contributions, please open an issue or contact maintainers at p.legazpi@buildingdigitaltwin.org
 - Content of the **Refence library**: pm.demiguel@buildingdigitaltwin.org
-- General question, please contact: info@buildingdigitaltwin
+- General question, please contact: info@buildingdigitaltwin.org
    - BDTA Website: https://buildingdigitaltwin.org/
    - BDTA address: Borsbeeksebrug 34/1 2600 Antwerpen, Belgium
 - Data models questions, please contact: apostolisbarekas@semmtech.nl
