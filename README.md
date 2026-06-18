@@ -44,7 +44,7 @@ This initial version delivers the core model (concepts, relations, and attribute
    Use the SHACL shapes provided in the ontology to validate your data.
 
 > [!NOTE]
-> The ontology was Generated and populated using **[LACES](https://laceshub.com/)**. 
+> The ontology was generated and populated using **[LACES](https://laceshub.com/)**. 
    
 ## Funding
 
