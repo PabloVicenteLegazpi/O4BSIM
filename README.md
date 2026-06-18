@@ -38,17 +38,17 @@ This initial version delivers the core model (concepts, relations, and attribute
    ```
    **Guidelines**
    - Manufacturers can structure their equipment catalogues using the core model.
-   - Developers can use the equipment data to build apps that work across different software vendors. 
+   - Developers can use the equipment data from the reference library to build apps that work across different software vendors. 
 
 4. **Validate data:**  
    Use the SHACL shapes provided in the ontology to validate your data.
 
 > [!NOTE]
-> The onotlogy was Generated and populated using **[LACES](https://laceshub.com/)**. 
+> The ontology was Generated and populated using **[LACES](https://laceshub.com/)**. 
    
 ## Funding
 
-This research has received funding from the European Union’s Horizon Research and Innovation Program under EU project Hycool-IT GA No 101138623 (CWA standardization process), and project DYMAN GA No 101161930 (development of ontologies for data centers).
+This research has received funding from the European Union’s Horizon Research and Innovation Program under EU project Hycool-IT GA No 101138623 (CWA standardisation process), and project DYMAN GA No 101161930 (development of ontologies for data centres).
 
 ## License
 
