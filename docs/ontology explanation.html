@@ -17,7 +17,18 @@
           company: "Semmtech",
           companyURL: "https://semmtech.com/"
       }],
-      editors: [{
+      editors: [
+      { 
+          name: "Pablo Vicente Legazpi", 
+          company: "Building Digital Twin Association (BDTA)",
+          companyURL: "https://buildingdigitaltwin.org/",
+      } ,
+      { 
+          name: "Paula De Miguel Blázquez", 
+          company: "Building Digital Twin Association (BDTA)",
+          companyURL: "https://buildingdigitaltwin.org/",
+      },
+      {
           name: "Apostolis Barekas", 
           company: "Semmtech",
           companyURL: "https://semmtech.com/"
@@ -42,13 +53,13 @@
       }, {
         key: "Download serialization",
         data: [
-          { value: "Turtle (Core Ontology)", href: "SIMBOTs_core_ontology.ttl" },
-          { value: "Turtle (Reference Library)", href: "SIMBOTs_Reference_Library.ttl" }
+          { value: "Turtle (Core Ontology)", href: "O4BSIM_SIMBOTs_core_ontology.ttl" },
+          { value: "Turtle (Reference Library)", href: "O4BSIM_SIMBOTs_Reference_Library.ttl" }
         ]
       }],
         
       additionalCopyrightHolders: '<a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and',
-      license: "cc-by"
+      license: "CC BY-NC-ND"
     };
   </script>
 
@@ -136,7 +147,8 @@
 
   <script>
     (function() {
-      var bdtaCopyright = 'Copyright © 2026 <a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and text is distributed under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0 License</a>.';
+      // Updated to CC BY-NC-ND 4.0
+      var bdtaCopyright = 'Copyright © 2026 <a href="https://buildingdigitaltwin.org/" target="_blank">BDTA</a>. BDTA disclaimer applies and text is distributed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0 License</a>.';
       
       function enforceCopyright() {
         var el = document.querySelector("p.copyright");
@@ -144,23 +156,23 @@
           el.innerHTML = bdtaCopyright;
         }
       }
-      // FIXED: Uses safe relative pathing and adds the mandatory 'px' layout unit
-        if (!document.getElementById("left-status-banner")) {
-          var img = document.createElement("img");
-          img.id = "left-status-banner";
-          img.src = "C:/Users/Apostolis Barekas/Apo - Code/SIMBOT - ReSpec/images/DRAFT.svg"; 
-          img.alt = "Status Ribbon";
-          
-          img.style.setProperty("position", "fixed", "important");
-          img.style.setProperty("left", "0px", "important"); 
-          img.style.setProperty("top", "0px", "important");
-          img.style.setProperty("width", "30px", "important");
-          img.style.setProperty("height", "460px", "important");
-          img.style.setProperty("z-index", "999999", "important");
-          img.style.setProperty("display", "block", "important");
-          
-          document.documentElement.appendChild(img);
-        }
+
+      if (!document.getElementById("left-status-banner")) {
+        var img = document.createElement("img");
+        img.id = "left-status-banner";
+        img.src = "../images/DRAFT.svg";
+        img.alt = "Status Ribbon";
+        
+        img.style.setProperty("position", "fixed", "important");
+        img.style.setProperty("left", "0px", "important"); 
+        img.style.setProperty("top", "0px", "important");
+        img.style.setProperty("width", "30px", "important");
+        img.style.setProperty("height", "460px", "important");
+        img.style.setProperty("z-index", "999999", "important");
+        img.style.setProperty("display", "block", "important");
+        
+        document.documentElement.appendChild(img);
+      }
 
       var observer = new MutationObserver(enforceCopyright);
       observer.observe(document.documentElement, { childList: true, subtree: true });
@@ -171,7 +183,8 @@
           img.id = "left-status-banner";
           img.src = "../images/DRAFT.svg"; 
           img.alt = "Status Ribbon";
-          img.style.cssText = "position: fixed !important; left: 0px !important; top: 0px !important; width: 30px !important; height: 280 !important; z-index: 7999999 !important; display: block !important; margin: 0 !important; padding: 0 !important;";
+          // FIXED: Added 'px' unit to height
+          img.style.cssText = "position: fixed !important; left: 0px !important; top: 0px !important; width: 30px !important; height: 280px !important; z-index: 7999999 !important; display: block !important; margin: 0 !important; padding: 0 !important;";
           document.documentElement.appendChild(img);
         }
         enforceCopyright();
