@@ -11,7 +11,7 @@ The intention of this ontology is to have a demonstration tool for future develo
 - **Core Ontology File:** [`O4BSIM_SIMBOTs_core_ontology.ttl`](O4BSIM_SIMBOTs_core_ontology.ttl)
 - **Reference Library File:** [`O4BSIM_SIMBOTs_Reference_Library.ttl`](O4BSIM_SIMBOTs_Reference_Library.ttl)
 - **Interactive Documentation:** 
-  - [Ontology Structural Explanation](https://pablovicentelegazpi.github.io/O4BSIM/docs/Sontology%20explanation.html)
+  - [Ontology Structural Explanation](https://pablovicentelegazpi.github.io/O4BSIM/docs/ontology%20explanation.html)
   - [SIMBOT Methodology & Context Explanation](https://pablovicentelegazpi.github.io/O4BSIM/docs/SIMBOT%20explanation.html)
 
 
